@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects | {{OWNER}}</title>
+<meta name="description" content="Every public project on github.com/{{OWNER}}, with live demos where they exist.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF1EC; --ink:#18232E; --muted:#56636D; --rule:#C8D0CA;
+  --lamp:#1E8A5F; --lamp-glow:rgba(30,138,95,.28); --field:#F8FAF7; --focus:#2457A6;
+}
+@media (prefers-color-scheme: dark){
+  :root{--paper:#121A20; --ink:#E4E9E4; --muted:#93A0A8; --rule:#2A353D;
+    --lamp:#3BC98E; --lamp-glow:rgba(59,201,142,.25); --field:#18222A; --focus:#7FA8E8;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:400 16px/1.55 "IBM Plex Sans",system-ui,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:56px 24px 72px}
+header .who{margin:0;color:var(--muted);font-size:15px}
+h1{font:600 clamp(48px,9vw,84px)/.95 "Barlow Condensed",sans-serif;letter-spacing:-.01em;margin:6px 0 16px}
+.lede{max-width:58ch;margin:0 0 28px;color:var(--muted)}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin:0 0 28px;padding:0;list-style:none;font-size:15px}
+.legend li{display:flex;align-items:center;gap:9px}
+.legend b{font-weight:500}
+
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:14px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule)}
+.controls input[type=search]{flex:1 1 240px;min-width:0;font:inherit;color:inherit;background:var(--field);
+  border:1px solid var(--rule);border-radius:6px;padding:9px 12px}
+.controls label{display:flex;gap:8px;align-items:center;font-size:15px;cursor:pointer}
+.controls select{font:inherit;font-size:15px;color:inherit;background:var(--field);border:1px solid var(--rule);border-radius:6px;padding:8px 10px}
+.controls input[type=checkbox]{width:18px;height:18px;accent-color:var(--lamp)}
+
+.lamp{flex:none;width:14px;height:14px;border-radius:50%;border:2px solid var(--muted);margin-top:.55em}
+.is-live .lamp,.legend .on{background:var(--lamp);border-color:var(--lamp);box-shadow:0 0 0 4px var(--lamp-glow)}
+
+#list{list-style:none;margin:0;padding:0}
+.proj{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.proj .body{flex:1;min-width:0}
+.proj h2{font:600 27px/1.1 "Barlow Condensed",sans-serif;margin:0 0 6px;overflow-wrap:anywhere}
+.desc{margin:0 0 8px;max-width:62ch}
+.desc.empty{color:var(--muted);font-style:italic}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:14px;align-items:center}
+.topics{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.topics li{border:1px solid var(--rule);border-radius:3px;padding:0 7px;font-size:13px}
+.side{flex:none;width:170px;text-align:right;display:flex;flex-direction:column;justify-content:space-between;gap:12px}
+.side time{color:var(--muted);font-size:14px;white-space:nowrap}
+.links{display:flex;gap:14px;justify-content:flex-end;align-items:center;font-weight:500;white-space:nowrap}
+a{color:var(--ink);text-decoration-thickness:1px;text-underline-offset:3px}
+a.go{background:var(--ink);color:var(--paper);text-decoration:none;padding:5px 12px;border-radius:4px}
+a.go:hover{opacity:.88}
+a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.none{padding:28px 0;color:var(--muted)}
+footer{margin-top:28px;color:var(--muted);font-size:14px}
+[hidden]{display:none!important}
+
+@media (max-width:620px){
+  .wrap{padding:36px 16px 56px}
+  .proj{flex-wrap:wrap}
+  .side{width:100%;flex-direction:row;align-items:center;justify-content:space-between;text-align:left;padding-left:32px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .is-live .lamp{animation:pulse 2.4s ease-in-out 1}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 var(--lamp-glow)}60%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 4px var(--lamp-glow)}}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="who">Brian Harbison, github.com/<a href="https://github.com/{{OWNER}}">{{OWNER}}</a></p>
+  <h1>Projects</h1>
+  <p class="lede">Everything public on my GitHub, rebuilt automatically from the account. A lit lamp means the project runs in your browser; the rest link straight to the code.</p>
+  <ul class="legend">
+    <li><span class="lamp on" aria-hidden="true"></span><span><b>{{LIVE}}</b> live demos</span></li>
+    <li><span class="lamp" aria-hidden="true"></span><span><b>{{CODE}}</b> code only</span></li>
+  </ul>
+</header>
+
+<div class="controls" role="search">
+  <input type="search" id="q" placeholder="Search projects" aria-label="Search projects">
+  <label><input type="checkbox" id="liveOnly"> Live demos only</label>
+  <select id="sort" aria-label="Sort projects">
+    <option value="updated">Recently updated</option>
+    <option value="name">Name</option>
+  </select>
+</div>
+
+<ul id="list">{{ROWS}}</ul>
+<p class="none" id="empty" hidden>No projects match. Clear the search or turn off “Live demos only”.</p>
+
+<footer>{{TOTAL}} projects. Last rebuilt {{BUILT}}.</footer>
+</div>
+<script>
+(function(){
+  var list=document.getElementById('list'), q=document.getElementById('q'),
+      live=document.getElementById('liveOnly'), sort=document.getElementById('sort'),
+      empty=document.getElementById('empty'),
+      rows=[].slice.call(list.querySelectorAll('.proj')), pinnedOrder=rows.slice();
+  function apply(){
+    var term=q.value.trim().toLowerCase(), shown=0;
+    rows.forEach(function(r){
+      var ok=(!term||r.dataset.search.indexOf(term)>-1)&&(!live.checked||r.dataset.live==='1');
+      r.hidden=!ok; if(ok) shown++;
+    });
+    empty.hidden=shown>0||!rows.length;
+  }
+  function order(){
+    var s=sort.value==='name'
+      ? rows.slice().sort(function(a,b){return a.dataset.name.localeCompare(b.dataset.name)})
+      : pinnedOrder;
+    s.forEach(function(r){list.appendChild(r)});
+  }
+  q.addEventListener('input',apply); live.addEventListener('change',apply);
+  sort.addEventListener('change',function(){order();apply()});
+})();
+</script>
+</body>
+</html>
